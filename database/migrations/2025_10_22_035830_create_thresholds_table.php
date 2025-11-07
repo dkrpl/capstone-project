@@ -19,9 +19,10 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        DB::table('treshold')->insert([
-            ['min_value'=> 3.0, 'description' => 'warning', 'created_at' => now(), 'updated_at'=> now()],
-            ['min_value' => 5.0, 'description' => 'Danger', 'created_at' => now(), 'updated_at' => now()]
+        // Perhatikan: gunakan nama tabel yang sama ('thresholds')
+        DB::table('thresholds')->insert([
+            ['min_value' => 3.0, 'description' => 'warning', 'created_at' => now(), 'updated_at' => now()],
+            ['min_value' => 5.0, 'description' => 'Danger',  'created_at' => now(), 'updated_at' => now()]
         ]);
     }
 
