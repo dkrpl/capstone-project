@@ -21,7 +21,7 @@ class DeviceController extends Controller
      */
     public function create()
     {
-        //
+        return view('device.create');
     }
 
     /**
@@ -29,7 +29,25 @@ class DeviceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validate form
+        $request->validate([
+            'uuid'         => 'required|unique:devices,uuid',
+            'nama_device'   => 'required|string',
+            'lokasi'         => 'required|string',
+            'status'         => 'required|in:aktif,nonaktif'
+        ]);
+
+
+        //create product
+        Device::create([
+            'uuid'         => $request->uuid,
+            'nama_device'   => $request->nama_device,
+            'lokasi'         => $request->lokasi,
+            'status'         => $request->status
+        ]);
+
+        //redirect to index
+        return redirect()->route('devices.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
     /**
