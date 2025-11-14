@@ -25,7 +25,15 @@
                                             <td>{{ $d->nama_device }}</td>
                                             <td>{{ $d->lokasi }}</td>
                                             <td>{{ $d->status }}</td>
-                                            <td></td>
+                                            <td>
+                                                <a href="{{ route('devices.edit', $d->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                                <form action="{{ route('devices.destroy', $d->id) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
+                                                </form>
+
+                                            </td>
                                         </tr>
                                         @endforeach
 

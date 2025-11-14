@@ -63,7 +63,8 @@ class DeviceController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $devices = Device::findOrFail($id);
+        return view('device.edit', compact('devices'));
     }
 
     /**
@@ -71,7 +72,23 @@ class DeviceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $devices = Device::findOrFail($id);
+
+        $request->validate([
+            'uuid'         => 'required|unique:devices,uuid,'.$devices->id,
+            'nama_device'   => 'required|string',
+            'lokasi'         => 'required|string',
+            'status'         => 'required|in:aktif,nonaktif'
+        ]);
+
+        $devices->update([
+            'uuid'         => $request->uuid,
+            'nama_device'   => $request->nama_device,
+            'lokasi'         => $request->lokasi,
+            'status'         => $request->status
+        ]);
+
+        return redirect()->route('devices.index')->with(['success' => 'Data Berhasil Diupdate!']);
     }
 
     /**
@@ -79,6 +96,9 @@ class DeviceController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $devices = Device::findOrFail($id);
+        $devices->delete();
+
+        return redirect()->route('devices.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 }
